@@ -1,6 +1,6 @@
 name: http_encapsulation
 description: http_encapsulation工具。一款简单二次封装dio的package
-version: 0.0.2
+version: 0.0.4
 #author: star(yifeng.du)
 homepage: https://github.com/yiqian08/dio_encapsulation
 

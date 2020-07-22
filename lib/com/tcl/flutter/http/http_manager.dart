@@ -9,13 +9,13 @@ import 'http_config.dart';
 import 'http_method.dart';
 import 'json_convert_help.dart';
 
-class DioManager{
-  static final DioManager _shared = DioManager._internal();
-  factory DioManager() => _shared;
+class HttpManager{
+  static final HttpManager _shared = HttpManager._internal();
+  factory HttpManager() => _shared;
 
   Dio dio;
 
-  DioManager._internal() {
+  HttpManager._internal() {
     if (null == dio) {
       BaseOptions options = BaseOptions(
           contentType: Headers.jsonContentType,
@@ -33,7 +33,7 @@ class DioManager{
   /**
    * 添加拦截器
    */
-  DioManager addIntercept(Interceptor interceptor) {
+  HttpManager addIntercept(Interceptor interceptor) {
     dio.interceptors.add(interceptor);
     return this;
   }
@@ -41,7 +41,7 @@ class DioManager{
   /**
    * 设置BaseUrl
    */
-  DioManager setBaseUrl(String baseUrl) {
+  HttpManager setBaseUrl(String baseUrl) {
     dio.options.baseUrl = baseUrl;
     return this;
   }
@@ -49,7 +49,7 @@ class DioManager{
   /**
    * 设置连接超时
    */
-  DioManager setConnectTimout(int connectTimeout) {
+  HttpManager setConnectTimout(int connectTimeout) {
     dio.options.connectTimeout = connectTimeout;
     return this;
   }
@@ -57,7 +57,7 @@ class DioManager{
   /**
    * 设置响应超时
    */
-  DioManager setReceiveTimeout(int receiveTimeout) {
+  HttpManager setReceiveTimeout(int receiveTimeout) {
     dio.options.receiveTimeout = receiveTimeout;
     return this;
   }
@@ -80,6 +80,7 @@ class DioManager{
     @required HTTPMethod method,
     @required String url,
     Map params,
+    data,
     String baseUrl,
     Map headers,
     @required Function(T) success,
@@ -94,7 +95,7 @@ class DioManager{
       }
       print("start request");
       Response response = await dio.request(
-                  url, queryParameters: params,
+                  url, queryParameters: params, data: data,
                   options: Options(method: HTTPMethodValues[method]),
                   );
       print("response: " + response.toString());
@@ -118,10 +119,11 @@ class DioManager{
     Map params,
     String baseUrl,
     Map headers,
+    data,
     @required Function(T) success,
     @required Function(ErrorEntity) error
   }){
-    request(method: HTTPMethod.GET, url: url, params: params, baseUrl: baseUrl,
+    request(method: HTTPMethod.GET, url: url, params: params, baseUrl: baseUrl, data: data,
         headers: headers, success: success, error: error);
   }
 
@@ -130,10 +132,11 @@ class DioManager{
     Map params,
     String baseUrl,
     Map headers,
+    data,
     @required Function(T) success,
     @required Function(ErrorEntity) error
   }){
-    request(method: HTTPMethod.POST, url: url, params: params, baseUrl: baseUrl,
+    request(method: HTTPMethod.POST, url: url, params: params, baseUrl: baseUrl, data: data,
         headers: headers, success: success, error: error);
   }
 
@@ -142,10 +145,11 @@ class DioManager{
     Map params,
     String baseUrl,
     Map headers,
+    data,
     @required Function(T) success,
     @required Function(ErrorEntity) error
   }){
-    request(method: HTTPMethod.PUT, url: url, params: params, baseUrl: baseUrl,
+    request(method: HTTPMethod.PUT, url: url, params: params, baseUrl: baseUrl, data: data,
         headers: headers, success: success, error: error);
   }
 
@@ -154,10 +158,11 @@ class DioManager{
     Map params,
     String baseUrl,
     Map headers,
+    data,
     @required Function(T) success,
     @required Function(ErrorEntity) error
   }){
-    request(method: HTTPMethod.DELETE, url: url, params: params, baseUrl: baseUrl,
+    request(method: HTTPMethod.DELETE, url: url, params: params, baseUrl: baseUrl, data: data,
         headers: headers, success: success, error: error);
   }
 
@@ -166,10 +171,11 @@ class DioManager{
     Map params,
     String baseUrl,
     Map headers,
+    data,
     @required Function(T) success,
     @required Function(ErrorEntity) error
   }){
-    request(method: HTTPMethod.PATCH, url: url, params: params, baseUrl: baseUrl,
+    request(method: HTTPMethod.PATCH, url: url, params: params, baseUrl: baseUrl, data: data,
         headers: headers, success: success, error: error);
   }
 
